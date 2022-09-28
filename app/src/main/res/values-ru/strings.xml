@@ -3,4 +3,5 @@
     <string name="app_name">Lyubov\'s Android Labs</string>
     <string name="hello_message">Privet mir!</string>
     <string name="button_message">Ay knopka</string>
+    <string name="hinttext">Pishi shto-to zdes</string>
 </resources>
