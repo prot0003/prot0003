@@ -76,14 +76,11 @@ public class MainActivity extends AppCompatActivity {
         variableBinding.switch1.setOnCheckedChangeListener( (button, isSelected) -> {
                         model.isSelected.postValue(isSelected);
                     });
-
         //ImageButton
         myimagebutton.setOnClickListener(click -> {
             Toast.makeText(this, "the width =" +variableBinding.myimagebutton.getWidth() + " the heigth =" +variableBinding.myimagebutton.getHeight(), Toast.LENGTH_LONG).show();
 
-
     });
-
             }
         }
 
