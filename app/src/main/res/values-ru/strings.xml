@@ -4,4 +4,6 @@
     <string name="hello_message">Privet mir!</string>
     <string name="button_message">Ay knopka</string>
     <string name="hinttext">Pishi shto-to zdes</string>
+    <string name="spin_message">flag Ukraini</string>
+    <string name="button">knopka</string>
 </resources>
