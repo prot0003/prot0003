@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import algonquin.cst2335.prot0003.R;
-import algonquin.cst2335.prot0003.databinding.ActivityMainBinding;
+
 import data.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
