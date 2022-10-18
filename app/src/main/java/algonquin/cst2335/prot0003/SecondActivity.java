@@ -36,8 +36,7 @@ public class SecondActivity extends AppCompatActivity {
                 Intent data = result.getData();
 
                 Bitmap thumbnail = data.getParcelableExtra("data");
-
-                                   //binding.changePic.setImageBitmap (thumbnail);
+                //binding.changePic.setImageBitmap (thumbnail);
 
                 FileOutputStream fOut = null;
                 try {
