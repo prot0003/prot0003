@@ -35,13 +35,13 @@ public class SecondActivity extends AppCompatActivity {
 
                 Intent data = result.getData();
 
-                Bitmap thumbnail = data.getParcelableExtra("data");
-                //binding.changePic.setImageBitmap (thumbnail);
+                Bitmap imageA = data.getParcelableExtra("data");
+                binding.imageView2.setImageBitmap (imageA);
 
                 FileOutputStream fOut = null;
                 try {
                     fOut = openFileOutput("Picture.png", Context.MODE_PRIVATE);
-                    thumbnail.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                    imageA.compress(Bitmap.CompressFormat.PNG, 100, fOut);
 
                     fOut.flush();
                     fOut.close();
@@ -79,7 +79,7 @@ public class SecondActivity extends AppCompatActivity {
             editor.apply();
 
             Intent call = new Intent(Intent.ACTION_DIAL);
-    call.setData(Uri.parse("tel:" + binding.PhoneNumber.getText().toString()));
+            call.setData(Uri.parse("tel:" + binding.PhoneNumber.getText().toString()));
             startActivity(call);
         });
 
