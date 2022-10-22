@@ -77,11 +77,15 @@ public class MainActivityTest {
                         isDisplayed()));
         textView.check(matches(withText("You shall not pass!")));
     }
+       /**
+        * test the password whether includes the UpperCase Letter, if not includes the UpperCase letter,
+        * textView displays "You shall not pass!"
+        */
     @Test
     public void testFindMissingUpperCase() {
         //find the view
         ViewInteraction appCompatEditText = onView( withId(R.id.EditText));
-        // type in password123#$*
+        // type in prot123!
         appCompatEditText.perform(replaceText("prot123!"));
 
         //find the button
@@ -103,7 +107,7 @@ public class MainActivityTest {
     public void testFindMissingLowerCase() {
         //find the view
         ViewInteraction appCompatEditText = onView( withId(R.id.EditText));
-        // type in PASSWORD123#$*
+        // type in PROT123!
         appCompatEditText.perform(replaceText("PROT123!"));
 
         // close the keyboard
@@ -130,7 +134,7 @@ public class MainActivityTest {
     public void testFindMissingNumber() {
         //find the view
         ViewInteraction appCompatEditText = onView( withId(R.id.EditText));
-        // type in password#$*
+        // type in Protasova!
         appCompatEditText.perform(replaceText("Protasova!"));
 
         //find the button
@@ -152,8 +156,8 @@ public class MainActivityTest {
     public void testFindMissingSpecialSymbol() {
         //find the view
         ViewInteraction appCompatEditText = onView( withId(R.id.EditText));
-        // type in Password123
-        appCompatEditText.perform(replaceText("Password123"));
+        // type in Prot123
+        appCompatEditText.perform(replaceText("Prot123"));
 
         //find the button
         ViewInteraction materialButton = onView(withId(R.id.LoginButton));
@@ -167,13 +171,13 @@ public class MainActivityTest {
     }
     /**
      * test the password which is fit for all requirements, at least one UpperCase letter, one LowerCase
-     * letter, one number and one Special symbol, textView displays "Your password is complex enough"
+     * letter, one number and one Special symbol
      */
     @Test
     public void testMeetRequirementPW() {
         //find the view
         ViewInteraction appCompatEditText = onView( withId(R.id.EditText));
-        // type in Password123#$*
+        // type in Prot123!
         appCompatEditText.perform(replaceText("Prot123!"));
 
         //find the button
@@ -183,7 +187,7 @@ public class MainActivityTest {
 
         //find the text view
         ViewInteraction textView = onView( withId(R.id.textView));
-        //check the text
+        //check the text and displays "Your password meets the requirements"
         textView.check(matches(withText("Your password meets the requirements.")));
     }
 
