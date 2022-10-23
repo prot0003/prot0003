@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         /** This holds the text at the centre of the screen */
         TextView typePW = findViewById(R.id.textView);
         /** This holds the password at the centre of the screen */
-        EditText pw = findViewById(R.id.editTextTextPassword);
+        EditText pw = findViewById(R.id.EditText);
         /** This holds the login button at the centre of the screen */
-        Button btn = findViewById(R.id.loginbutton);
+        Button btn = findViewById(R.id.LoginButton);
 
         /**
          * Login button onClick Listener to validate the password
@@ -98,3 +98,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
