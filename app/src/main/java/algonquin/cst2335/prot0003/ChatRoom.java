@@ -20,11 +20,11 @@ import algonquin.cst2335.prot0003.databinding.SentMessageBinding;
 
 
 public class ChatRoom extends AppCompatActivity {
-    ActivityChatRoomBinding binding;
-    RecyclerView.Adapter<MyRowHolder> adapter;
+    private ActivityChatRoomBinding binding;
+    RecyclerView.Adapter<MyRowHolder> myAdapter;
+
     ArrayList<ChatMessage> messages = new ArrayList<>();
     ChatRoomViewModel chatModel;
-    private RecyclerView.Adapter myAdapter;
 
     //  binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<myRowHolder>(){
 
@@ -51,13 +51,38 @@ public class ChatRoom extends AppCompatActivity {
             ChatMessage chatMessage = new ChatMessage(messageText, currentDateandTime, true);
             messages.add(chatMessage);
             messages = chatModel.messages.getValue();
-            myAdapter.notifyItemInserted(messages.size() - 1);
+            myAdapter.notifyItemChanged(messages.size() - 1);
+            //clear the previous text
+            binding.textInput.setText("");
+        });
+
+        binding.button3.setOnClickListener(click -> {
+            String messageText = binding.textInput.getText().toString();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+            String currentDateandTime = sdf.format(new Date());
+            ChatMessage chatMessage = new ChatMessage(messageText, currentDateandTime, false);
+            messages.add(chatMessage);
+            messages = chatModel.messages.getValue();
+            myAdapter.notifyItemChanged(messages.size() - 1);
             //clear the previous text
             binding.textInput.setText("");
         });
 
         binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
             @NonNull
+            @Override
+            public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View root;
+                if (viewType == 0) {
+                    root = getLayoutInflater().inflate(R.layout.sent_message, parent, false);
+                }else {
+                    root = getLayoutInflater().inflate(R.layout.receive_massage, parent, false);
+                    //SentMessageBinding binding = SentMessageBinding.inflate(getLayoutInflater());
+                }
+                //    return new MyRowHolder(binding.getRoot());
+                return new MyRowHolder( root );
+            }
             @Override
             public int getItemViewType(int position) {
                 ChatMessage thisMessage = messages.get(position);
@@ -74,15 +99,6 @@ public class ChatRoom extends AppCompatActivity {
                 ChatMessage obj = messages.get(position);
                 holder.messageText.setText(obj.getMessage());
                 holder.timeText.setText(obj.getTimeSent());
-            }
-
-            @Override
-            public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                if (viewType == 0) {
-                    SentMessageBinding binding = SentMessageBinding.inflate(getLayoutInflater());
-                }
-                //    return new MyRowHolder(binding.getRoot());
-                return null;
             }
 
             @Override
@@ -103,28 +119,3 @@ public class ChatRoom extends AppCompatActivity {
         }
     }
 }
-
-
-//         ActivityChatRoomBinding binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
-//         return new MyRowHolder(binding.getRoot());
-//      }
-//         @Override
-//        public int getItemViewType(int position) {
-//            if (messages.get(position).isSentButton)return 0;
-//            return 1;
-//        } binding = C.inflate(getLayoutInflater());
-//        return new MyRowHolder(binding.getRoot());
-//      }
-
-//        @NonNull
-//        @Override
-//    public <ReceiveMessageBinding> MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//    if (viewType == 0) {
-//        SentMessageBinding binding = SentMessageBinding.inflate(getLayoutInflater());
-//        return new MyRowHolder(binding.getRoot());
-//   }
-//    ReceiveMessageBinding binding = ReceiveMessageBinding.inflate(getLayoutInflater());
-//    return new MyRowHolder(binding.getRoot());
-//   }
-
-
