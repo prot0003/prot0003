@@ -22,27 +22,28 @@ public class MainActivity extends AppCompatActivity {
 
         Log.w( "MainActivity",  "In onCreate() - Loading Widgets");
 
-        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        String emailAddress = prefs.getString("LoginName", "");
-        binding.emailEditText.setText(emailAddress);
+       SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+       String emailAddress = prefs.getString("LoginName", "");
+       binding.emailEditText.setText(emailAddress);
 
         binding.button.setOnClickListener(clk -> {
+            Intent chatRoom = new Intent(MainActivity.this, ChatRoom.class);
+            startActivity(chatRoom);
             String userTyped = binding.emailEditText.getText().toString();
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("LoginName", userTyped);
+           editor.putString("LoginName", userTyped);
             editor.apply();
 
-            Intent nextPage = new Intent(MainActivity.this, SecondActivity.class);//tell where you want to go
+           Intent nextPage = new Intent(MainActivity.this, SecondActivity.class);//tell where you want to go
             nextPage.putExtra ("EmailAddress", binding.emailEditText.getText().toString());
 
             startActivity(nextPage);
         });
     }
     // activity is visible, but not responding to touch
-    @Override
+    //@Override
     protected void onStart(){
         super.onStart();
-        //      Log.e(tag”MainActivity”, msg:”In OnStart()”
         Log.w("MainActivity", "In onStart() - Loading");
 
     }
@@ -53,27 +54,29 @@ public class MainActivity extends AppCompatActivity {
         Log.w("MainActivity", "In onResume() - Loading");
     }
 
-    //no longer responds to user input
+      //no longer responds to user input
     @Override
     protected void onPause() {
-        super.onPause();
+       super.onPause();
         Log.w("MainActivity", "In onPause() - Loading");
     }
 
-    // no longer visiblle
+      // no longer visiblle
     @Override
     protected void onStop() {
         super.onStop();
-        Log.w("MainActivity", "In onStop() - Loading");
+       Log.w("MainActivity", "In onStop() - Loading");
     }
 
-    // the garbage collector is clearing the memory
+      // the garbage collector is clearing the memory
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.w("MainActivity", "In onDestroy() - Loading");
     }
 }
+
+
 
 //    ActivityMainBinding binding;
  //   @Override
