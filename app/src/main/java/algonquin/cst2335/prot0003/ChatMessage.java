@@ -14,7 +14,7 @@ public class ChatMessage {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="id")
-    public int Id;
+    public int id;
 
     public ChatMessage(){ }
 
