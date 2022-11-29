@@ -61,7 +61,6 @@ public class ChatRoom extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.frameLayout, new MessageDetailsFragment(newMessageValue))
                     .commit();
-
              */
         });
         // load from database:
@@ -136,6 +135,7 @@ public class ChatRoom extends AppCompatActivity {
         });
 
         binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
+
             @NonNull
             @Override
             public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
