@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,6 +40,8 @@ public class ChatRoom extends AppCompatActivity {
     ChatMessage chatMessage;
     ChatRoomViewModel chatModel;
 
+    MessageDetailsFragment detailsFragment;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -46,20 +49,60 @@ public class ChatRoom extends AppCompatActivity {
         return true;
     }
 
-   /* @Override
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
             case R.id.delete:
                 try{
-                ChatMessage selectedMessage
+                ChatMessage selectedMessage = chatModel.selectedMessage.getValue();
+                MyRowHolder selectedRow = chatModel.selectedRow.getValue();
 
+                if (selectedMessage != null) {
+                    int position = selectedRow.getAbsoluteAdapterPosition();
+                    ChatMessage thisMessage = chatModel.messages.getValue().get(position);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
+                    builder.setMessage("Do you want to delete this message: " + thisMessage.getMessage())
+                            .setTitle("Question?")
+                            .setNegativeButton("NO", (dialog, clk) -> {
+                            })
+                            .setPositiveButton("YES", (dialog, clk) -> {
+                                Snackbar.make(binding.myToolbar, "Do you want to deleted this message? " + thisMessage.getMessage(), Snackbar.LENGTH_LONG)
+                                        .setAction("UNDO", clkundo -> {
+                                            Executor thread = Executors.newSingleThreadExecutor();
+                                            thread.execute(() -> {
+                                                mDao.insertMessage(thisMessage);
+                                            });
+                                            chatModel.messages.getValue().add(position, thisMessage);
+                                            myAdapter.notifyItemChanged(position);
+                                        }).show();
+                                Executor thread = Executors.newSingleThreadExecutor();
+                                thread.execute(()-> {
+                                    mDao.deleteMessage(thisMessage);
+                                });
+                                myAdapter.notifyItemRemoved(position);
+                                chatModel.messages.getValue().remove(position);
+                                getSupportFragmentManager().beginTransaction().remove(detailsFragment).commit();
+                            })
+                            .create().show();
+                } else {
+                    Toast.makeText(this, "Please select the message you want to delete.", Toast.LENGTH_LONG).show();
                 }
+
+                }catch (IndexOutOfBoundsException e) {
+                    Toast.makeText(this, "Please select the message you want to delete.", Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case R.id.about:
+                Toast.makeText(this, "Version 2.0, created by Lyubov Protasova.", Toast.LENGTH_LONG).show();
+                break;
         }
 
         return true;
-    }  */
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +122,7 @@ public class ChatRoom extends AppCompatActivity {
             FragmentManager fMgr = getSupportFragmentManager();
             FragmentTransaction tx = fMgr.beginTransaction();
 
-            MessageDetailsFragment detailsFragment = new MessageDetailsFragment( newMessageValue);
+            detailsFragment = new MessageDetailsFragment( newMessageValue);
             tx.replace(R.id.fragmentLocation, detailsFragment);
             tx.addToBackStack("anything you want here"); //means that the back arrow undones the transaction
             tx.commit(); //This line actually loads the fragment into the specified FrameLayout
@@ -222,6 +265,7 @@ public class ChatRoom extends AppCompatActivity {
                 int position = getAbsoluteAdapterPosition();
                 ChatMessage thisMessage = messages.get(position);
                 chatModel.selectedMessage.postValue(thisMessage);
+                chatModel.selectedRow.postValue(this);
 
                 /* comment this for now, will use it next week
                 AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
