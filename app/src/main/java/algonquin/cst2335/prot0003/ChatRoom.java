@@ -13,6 +13,7 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ import algonquin.cst2335.prot0003.databinding.SentMessageBinding;
 import algonquin.cst2335.prot0003.databinding.ReceiveMassageBinding;
 
 public class ChatRoom extends AppCompatActivity {
-    private ActivityChatRoomBinding binding;
+    ActivityChatRoomBinding binding;
     RecyclerView.Adapter<MyRowHolder> myAdapter;
 
     ArrayList<ChatMessage> messages = new ArrayList<>();
@@ -45,11 +46,27 @@ public class ChatRoom extends AppCompatActivity {
         return true;
     }
 
+   /* @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
 
+        switch (item.getItemId()) {
+            case R.id.delete:
+                try{
+                ChatMessage selectedMessage
+
+                }
+        }
+
+        return true;
+    }  */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         messages = chatModel.messages.getValue();
@@ -92,8 +109,8 @@ public class ChatRoom extends AppCompatActivity {
             });
         }
 
-        binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
+
 
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
 
